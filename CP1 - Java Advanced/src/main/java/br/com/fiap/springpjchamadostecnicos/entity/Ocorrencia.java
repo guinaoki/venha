@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,5 +31,20 @@ public class Ocorrencia {
 
     @Column(name = "DESCRICAO_OCORRENCIA")
     private String descricao;
+
+
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(
+            name = "CHAMADO",
+            referencedColumnName = "ID_CHAMADO",
+            foreignKey = @ForeignKey(
+                    name = "FK_OCORRENCIA_CHAMADO"
+            )
+    )
+    private Chamado chamado;
+
+    @Column( name = "DATA_OCORRENCIA")
+    private LocalDateTime data;
+
 
 }
