@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,5 +34,46 @@ public class Chamado {
 
     @Column(name = "DESCRICAO_CHAMADO")
     private String descricao;
+
+
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(
+            name = "SOLICITANTE",
+            referencedColumnName = "ID_SOLICITANTE",
+            foreignKey = @ForeignKey(
+                    name = "FK_CHAMADO_SOLICITANTE"
+            )
+    )
+    private Solicitante solicitante;
+
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(
+            name = "TECNICO",
+            referencedColumnName = "ID_TECNICO",
+            foreignKey = @ForeignKey(
+                    name = "FK_CHAMADO_TECNICO"
+            )
+    )
+    private Tecnico tecnico;
+
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(
+            name = "ESPECIALIDADE",
+            referencedColumnName = "ID_ESPECIALIDADE",
+            foreignKey = @ForeignKey(
+                    name = "FK_CHAMADO_ESPECIALIDADE"
+            )
+    )
+    private Especialidade especialidade;
+
+    @Column( name = "DATA_ABERTURA")
+    private LocalDateTime dataAbertura;
+
+    @Column( name = "DATA_PRIMEIRO_ATENDIMENTO")
+    private LocalDateTime dataPrimeiroAtendimento;
+
+    @Column( name = "DATA_ENCERRAMENTO")
+    private LocalDateTime dataEncerramento;
+
 
 }

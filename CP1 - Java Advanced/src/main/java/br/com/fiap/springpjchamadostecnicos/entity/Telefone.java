@@ -36,4 +36,15 @@ public class Telefone {
     @Column(name = "NUMERO_TELEFONE")
     private String numero;
 
+
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(
+            name = "SOLICITANTE",
+            referencedColumnName = "ID_SOLICITANTE",
+            foreignKey = @ForeignKey(
+                    name = "FK_TELEFONE_SOLICITANTE"
+            )
+    )
+    private Solicitante solicitante;
+
 }
